@@ -1,2 +1,1 @@
-# pretty-mermaid
-🧜‍♀️ GUI for Mermaid
+# 🧜‍♀️ Pretty Mermaid
