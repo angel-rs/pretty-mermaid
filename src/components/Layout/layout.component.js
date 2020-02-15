@@ -5,20 +5,19 @@ import Content from './Content/content.component';
 
 const Layout = (props) => {
   const {
+    outline,
     children,
   } = props;
 
   return (
-    <>
-      <Header />
-    
-      <Content>
-        {children}
-      </Content>
+		<>
+			<Header />
 
-      <Footer />
-    </>
-  );
+			<Content>{children}</Content>
+
+			{!outline && <Footer />}
+		</>
+	);
 };
 
 export { Layout };

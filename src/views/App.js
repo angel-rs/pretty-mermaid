@@ -1,14 +1,22 @@
 import React from 'react';
-import { Layout } from '../components';
-import Canvas from './Canvas/canvas.component';
+import ReactCursorPosition from 'react-cursor-position';
+import { ThemeProvider, CSSReset } from '@chakra-ui/core';
+
+import { Layout, Canvas } from '../components';
+import theme from '../theme'
 import './App.scss';
 
 function App() {
   return (
-    <Layout>
-      <Canvas />
-    </Layout>
-  );
+		<ThemeProvider theme={theme}>
+			<CSSReset />
+			<Layout outline>
+				<ReactCursorPosition>
+				  <Canvas />
+				</ReactCursorPosition>
+			</Layout>
+		</ThemeProvider>
+	);
 }
   
 export default App;

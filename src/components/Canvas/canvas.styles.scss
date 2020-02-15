@@ -1,0 +1,16 @@
+.canvas {
+  display: flex;
+  padding: 6px;
+  background-color: white;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  position: relative;
+
+  pre, textarea {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+  .string { color: green; }
+  .number { color: darkorange; }
+  .boolean { color: blue; }
+  .null { color: magenta; }
+  .key { color: darkslategray; }
+}
+

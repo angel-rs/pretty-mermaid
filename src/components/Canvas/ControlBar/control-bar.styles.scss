@@ -1,0 +1,16 @@
+#control-bar {
+  width: 55px;
+  height: fit-content;
+  left: 10px;
+  top: 10px;
+  border-radius: 6px;
+  border: 0.5px solid #fcfcfc;
+  // box-shadow: 5px 5px 20px -5px rgba(82, 60, 60, 0.20);
+  padding: 3px auto;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 19999999;
+}

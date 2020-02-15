@@ -4,9 +4,12 @@ import './header.styles.scss';
 const Header = (props) => {
   return (
     <header className="pretty-header" {...props}>
-      <p>
-        Hi 🧜‍♀️
-      </p>
+      <span className="">
+        <span role="img" aria-label="mermaid">
+          🧜️
+        </span>
+        Pretty Mermaid
+      </span>
     </header>
   );
 }
