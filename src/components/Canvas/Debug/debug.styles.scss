@@ -1,0 +1,25 @@
+#debug-box {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  max-width: 90vw;
+  min-height: 40vh;
+  width: 90vw;
+  z-index: 10000;
+
+  pre {
+    min-height: inherit;
+    width: inherit;
+    max-height: inherit;
+    z-index: inherit;
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+    overflow: scroll;
+  }
+  .string { color: green; }
+  .number { color: darkorange; }
+  .boolean { color: blue; }
+  .null { color: magenta; }
+  .key { color: darkslategray; }
+}
