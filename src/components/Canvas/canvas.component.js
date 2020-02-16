@@ -1,39 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Flex, useColorMode } from '@chakra-ui/core';
 import { mermaidAPI } from 'mermaid';
-import {
-  Textarea,
-} from '@chakra-ui/core';
+import AceEditor from "react-ace";
 
-import ControlBar from './ControlBar/control-bar.component'
+import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-min-noconflict/ext-searchbox';
+
 import './canvas.styles.scss';
-
-function syntaxHighlight(json) {
-	if (typeof json != 'string') {
-		json = JSON.stringify(json, null, 2);
-	}
-	json = json
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;');
-	return json.replace(
-		/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
-		function(match) {
-			var cls = 'number';
-			if (/^"/.test(match)) {
-				if (/:$/.test(match)) {
-					cls = 'key';
-				} else {
-					cls = 'string';
-				}
-			} else if (/true|false/.test(match)) {
-				cls = 'boolean';
-			} else if (/null/.test(match)) {
-				cls = 'null';
-			}
-			return '<span class="' + cls + '">' + match + '</span>';
-		}
-	);
-}
 
 mermaidAPI.initialize({
   startOnLoad: true,
@@ -42,12 +16,11 @@ mermaidAPI.initialize({
 });
 
 const Canvas = (props) => {
-  const [currentControl, setCurrentControl] = useState(null)
-  const [tokens, setTokens] = useState([])
-  const [definition, setDefinition] = useState('')
+  const { colorMode } = useColorMode();
+  const [definition] = useState('')
   const [diagram, setDiagram] = useState('')
   const [error, setError] = useState('')
-  const { position } = props
+  const theme = colorMode === 'light' ? 'github' : 'monokai';
 
   useEffect(() => {
     console.log(definition)
@@ -71,90 +44,24 @@ const Canvas = (props) => {
       setDiagram('')
       setError('Invalid mermaid syntax');
     }
-  }, [definition]);
-
-  const computeDiagram = () => {
-    let startDefinition = `graph TD\n`
-    let definition = startDefinition;
-
-    const sortByPosition = (a, b) => a.x - b.x || a.y - b.y;
-
-    const boxes = tokens
-      .filter(({ token }) => token === 'Box')
-      .sort(sortByPosition);
-    // const lines = tokens.filter(({token}) => token === 'Line').sort(sortByPosition)
-
-    boxes.forEach((_, i) => {
-      definition += `	${i}\n`;
-    });
-    
-    if (definition !== startDefinition) {
-      setDefinition(definition);
-    }
-  }
-
-  const memoizedComputeDiagram = useCallback(
-    computeDiagram,
-    [tokens]
-  );
-
-  useEffect(() => {
-    if (tokens.length > 0) {
-      memoizedComputeDiagram();
-    }
-  }, [tokens, memoizedComputeDiagram]);
-
-  const onClick = () => {
-    if (!currentControl) return
-
-    const newToken = {
-      position,
-      token: currentControl,
-    }
-
-    const updatedTokens = [ ...tokens, newToken ];
-    setTokens(updatedTokens)
-    setCurrentControl(null)
-  };
-
-  const debug = {
-    state: {
-      currentControl,
-      tokens,
-      definition,
-      diagram,
-    },
-    props,
-  }
+  }, [definition, error]);
 
   return (
-		<main className="canvas" onClick={onClick}>
-			<pre
-				style={{
-					position: 'absolute',
-					right: 20,
-					width: 330,
-					overflowY: 'scroll',
-					height: '90%',
-				}}
-				dangerouslySetInnerHTML={{ __html: syntaxHighlight(debug) }}
-			/>
-			<Textarea
-				isInvalid={!!error}
-				value={definition}
-				onChange={({ target }) => {
-					setDefinition(target.value);
-				}}
-				style={{
-					position: 'absolute',
-					right: 350,
-					width: 400,
-					overflowY: 'scroll',
-					height: '90%',
+		<Flex className="canvas">
+			<AceEditor
+				placeholder="Here goes your 🧜️ code"
+				onChange={console.log}
+				name="editor"
+				theme={theme}
+				fontSize={16}
+				showPrintMargin
+				showGutter
+				highlightActiveLine
+				editorProps={{
+					tabSize: 2,
+					showLineNumbers: true,
 				}}
 			/>
-
-			<ControlBar setControl={setCurrentControl} />
 
 			{diagram && (
 				<div
@@ -164,7 +71,7 @@ const Canvas = (props) => {
 					dangerouslySetInnerHTML={{ __html: diagram }}
 				/>
 			)}
-		</main>
+		</Flex>
 	);
 };
 

@@ -1,22 +1,21 @@
 import React from 'react';
-import ReactCursorPosition from 'react-cursor-position';
-import { ThemeProvider, CSSReset } from '@chakra-ui/core';
+import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
 
-import { Layout, Canvas } from '../components';
+import { Layout, Canvas } from 'src/components';
 import theme from '../theme'
 import './App.scss';
 
 function App() {
   return (
 		<ThemeProvider theme={theme}>
-			<CSSReset />
-			<Layout outline>
-				<ReactCursorPosition>
-				  <Canvas />
-				</ReactCursorPosition>
-			</Layout>
+			<ColorModeProvider>
+				<CSSReset />
+				<Layout>
+					<Canvas />
+				</Layout>
+			</ColorModeProvider>
 		</ThemeProvider>
 	);
 }
-  
+// :  
 export default App;
