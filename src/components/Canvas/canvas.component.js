@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Flex, useColorMode } from '@chakra-ui/core';
-import { mermaidAPI } from 'mermaid';
 import AceEditor from "react-ace";
+import { mermaidAPI } from 'mermaid';
+
+import { Preview } from './Preview/preview.component'
+import initialPreviews from './Preview/initialPreviews';
 
 import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-min-noconflict/ext-searchbox';
-
 import './canvas.styles.scss';
 
 mermaidAPI.initialize({
@@ -15,11 +17,11 @@ mermaidAPI.initialize({
   theme: "forest",
 });
 
-const Canvas = (props) => {
+const Canvas = () => {
   const { colorMode } = useColorMode();
-  const [definition] = useState('')
-  const [diagram, setDiagram] = useState('')
-  const [error, setError] = useState('')
+  const [definition] = useState(initialPreviews.flowChart);
+  const [diagram, setDiagram] = useState(initialPreviews.flowChart);
+  const [error, setError] = useState('');
   const theme = colorMode === 'light' ? 'github' : 'monokai';
 
   useEffect(() => {
@@ -63,14 +65,10 @@ const Canvas = (props) => {
 				}}
 			/>
 
-			{diagram && (
-				<div
-					id="mermaid"
-					className="mermaid"
-					style={{ paddingLeft: 200, maxHeight: '100%', maxWidth: '100%' }}
-					dangerouslySetInnerHTML={{ __html: diagram }}
-				/>
-			)}
+      <Preview
+        preview={diagram}
+        error={error}
+      />
 		</Flex>
 	);
 };
