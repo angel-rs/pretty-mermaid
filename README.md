@@ -20,13 +20,13 @@
 
 ## 🛣️ Roadmap
 
-- Darkmode [x]
-- Export diagram []
-- Import diagram []
-- Mermaid syntax highlighting []
-- Share feature []
-- Enhanced viewing for large diagrams []
-- Dashboard to see all saved diagrams _localstorage (?)_
+- [x] Darkmode
+- [ ] Export diagram
+- [ ] Import diagram
+- [ ] Mermaid syntax highlighting
+- [ ] Share feature
+- [ ] Enhanced viewing for large diagrams
+- [ ] Dashboard to see all saved diagrams _localstorage (?)_
 - ?
 
 ## 👨‍💻 Contributing
