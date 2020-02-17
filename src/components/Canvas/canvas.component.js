@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, useColorMode } from '@chakra-ui/core';
+import { Box, Text, Flex, useColorMode } from '@chakra-ui/core';
 import AceEditor from "react-ace";
 
 import { Preview } from './Preview/preview.component'
@@ -15,6 +15,7 @@ const Canvas = () => {
   const { colorMode } = useColorMode();
   const [definition, setDefinition] = useState(initialPreviews.flowChart);
   const [annotations, setAnnotations] = useState([]);
+  const [previewValues, setPreviewValues] = useState(null);
   const theme = colorMode === 'light' ? 'github' : 'monokai';
 
   const onChange = (newDefinition) => {
@@ -52,41 +53,59 @@ const Canvas = () => {
 			justify="space-between"
 			style={{ padding: '0px 10px' }}
 		>
-			<AceEditor
-				name="editor"
-				placeholder="Here goes your 🧜️ code"
-				onChange={onChange}
-				value={definition}
-				theme={theme}
-				fontSize={16}
-				showPrintMargin
-				showGutter
-				highlightActiveLine
-				debounceChangePeriod={400}
-				defaultValue={initialPreviews.flowChart}
-				editorProps={{
-					tabSize: 2,
-					showLineNumbers: true,
-				}}
-				style={{
-					height: '',
-					width: '48vw',
-				}}
-				annotations={annotations}
-			/>
+      <Box style={{ overflow: 'hidden' }}>
+        <Text fontSize={['sm', 'md', 'lg', 'xl']} style={{ paddingBottom: 16 }}>
+          Editor
+        </Text>
+        <AceEditor
+          name="editor"
+          placeholder="Here goes your 🧜️ code"
+          onChange={onChange}
+          value={definition}
+          theme={theme}
+          fontSize={16}
+          showPrintMargin
+          showGutter
+          highlightActiveLine
+          debounceChangePeriod={400}
+          defaultValue={initialPreviews.flowChart}
+          editorProps={{
+            tabSize: 2,
+            showLineNumbers: true,
+          }}
+          style={{
+            height: '100%',
+            width: '48vw',
+            paddingTop: 16,
+          }}
+          annotations={annotations}
+        />
+      </Box>
 
 			<Preview
-				id="#mermaid"
 				definition={definition}
 				onError={onError}
 				onErrorFixed={onErrorFixed}
+				onUpdate={values =>
+					setPreviewValues({
+						...previewValues,
+						...values,
+					})
+				}
 			/>
 
-			{process.env.NODE_ENV !== 'production' && (
+			{process.env.NODE_ENV !== 'production' && true && (
 				<Debug
+					theme={colorMode === 'light' ? undefined : 'monokai'}
 					values={{
-						debug: true,
-						definition,
+						editor: {
+							theme,
+							definition,
+							annotations,
+						},
+						preview: {
+							...previewValues,
+						},
 					}}
 				/>
 			)}

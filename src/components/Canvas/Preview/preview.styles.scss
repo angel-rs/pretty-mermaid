@@ -1,3 +1,15 @@
 .preview {
   width: 48vw;
+
+  .diagram-container {
+    height: 100%;
+    position: relative;
+
+    #diagram-alert {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
 }

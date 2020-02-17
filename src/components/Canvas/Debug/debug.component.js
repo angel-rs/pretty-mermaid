@@ -1,14 +1,17 @@
 import React from 'react';
 import { Box } from '@chakra-ui/core';
-
-import { syntaxHighlight } from 'src/utils';
+import ReactJson from 'react-json-view';
 
 import './debug.styles.scss';
 
-const Debug = ({ values }) => {
+const Debug = ({ values, theme }) => {
   return (
-		<Box id="debug-box" bg="gray">
-			<pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(values) }} />
+		<Box id="debug-box" borderWidth="1px">
+      <ReactJson
+        src={values}
+        theme={theme}
+        enableClipboard={false}
+      />
 		</Box>
 	);
 }

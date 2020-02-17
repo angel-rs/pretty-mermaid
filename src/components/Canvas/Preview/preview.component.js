@@ -1,101 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import { mermaidAPI } from 'mermaid';
+import mermaid from 'mermaid';
+import Mermaid from 'react-mermaid2';
 import {
   Flex,
-  Box,
   Text,
-  Divider,
   Alert,
   AlertIcon,
 } from '@chakra-ui/core';
 
-import { ErrorBoundary } from './error-boundary.component';
+import { ErrorBoundary } from 'react-error-boundary';
 import './preview.styles.scss';
+
+const mermaidConfig = {
+  startOnLoad: true,
+  securityLevel: 'loose',
+  theme: 'forest',
+};
 
 const Preview = (props) => {
   const {
-    id,
     definition,
     onError,
     onErrorFixed,
+    onUpdate,
   } = props;
 
   const [currentDefinition, setCurrentDefinition] = useState('');
+  const [updating, setUpdating] = useState(false);
   const [preview, setPreview] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    mermaidAPI.initialize({
-      startOnLoad: true,
-      securityLevel: 'loose',
-      theme: 'forest',
-    });
-  }, []);
+  const updatePreview = () => {
+    console.log('updating diagram');
+    setUpdating(true);
+    setTimeout(() => {
+      setUpdating(false);
+    }, 1);
+  }
 
   useEffect(() => {
+    let localError;
     const diagramIsDifferent = currentDefinition !== definition;
     const nextDefinitionIsValid = () => {
-      let isValid = false;
-
       try {
-        if (mermaidAPI.parse(definition)) {
-          isValid = true;
-        }
+        mermaid.parse(definition);
+        setError('')
+        onErrorFixed();
+        return true;
       } catch (error) {
         onError(error)
+        setError('Error parsing')
+        return false;
       }
-
-      return isValid;
     };
     const isNextValidationValid = nextDefinitionIsValid();
 
-    console.log({
-      isNextValidationValid
+    onUpdate({
+      debug: {
+        diagramIsDifferent,
+        isNextValidationValid,
+        error,
+        definition,
+        localError,
+      }
     })
 
     if (diagramIsDifferent && isNextValidationValid && !error) {
-			console.log('something changed -- updating definition');
-			setCurrentDefinition(definition);
+      setCurrentDefinition(definition);
+      updatePreview();
 		}
   }, [definition]);
 
-  useEffect(() => {
-    if (currentDefinition) {
-      mermaidAPI.render('#mermaid', currentDefinition, svg => {
-        setPreview(svg);
-        setError('');
-        onErrorFixed();
-      });
-    }
-  }, [currentDefinition]);
-
   return (
 		<Flex className="preview" direction="column">
-			<Text fontSize={['sm', 'md', 'lg', 'xl']}>
-        Preview
-      </Text>
+			<Text fontSize={['sm', 'md', 'lg', 'xl']} style={{ paddingBottom: 16 }}>
+				Preview
+			</Text>
 
-			<Divider />
-
-      {error && (
-        <Alert status="warning">
-          <AlertIcon />
-          There seems to be something wrong with your diagram
-        </Alert>
-      )}
-
-			<Box borderWidth="0.5px">
-				{preview && (
-					<ErrorBoundary>
-						<div
-							id={id}
-							className="mermaid"
-							style={{ paddingLeft: 200, maxHeight: '100%', maxWidth: '100%' }}
-							dangerouslySetInnerHTML={{ __html: !!preview ? preview : '' }}
-						/>
-					</ErrorBoundary>
+			<Flex borderWidth="0.5px" align="center" justify="center" className="diagram-container">
+        {error && (
+          <Alert id="diagram-alert" status="warning">
+            <AlertIcon />
+            There seems to be something wrong with your diagram
+          </Alert>
+        )}
+				{!updating && (
+          <ErrorBoundary FallbackComponent={() => null}>
+            <Mermaid chart={currentDefinition} />
+          </ErrorBoundary>
 				)}
-			</Box>
+			</Flex>
 		</Flex>
 	);
 }
