@@ -48,5 +48,8 @@
   },
   "devDependencies": {
     "react-json-view": "^1.19.1"
+  },
+  "engines": {
+    "node" : ">=12"
   }
 }
