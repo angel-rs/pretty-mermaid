@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import mermaid from 'mermaid';
 import Mermaid from 'react-mermaid2';
+import svgPanZoom from 'svg-pan-zoom';
 import {
   Flex,
   Text,
@@ -28,7 +29,6 @@ const Preview = (props) => {
 
   const [currentDefinition, setCurrentDefinition] = useState('');
   const [updating, setUpdating] = useState(false);
-  const [preview, setPreview] = useState('');
   const [error, setError] = useState('');
 
   const updatePreview = () => {
@@ -36,6 +36,17 @@ const Preview = (props) => {
     setUpdating(true);
     setTimeout(() => {
       setUpdating(false);
+      setTimeout(() => {
+        const svg = document.querySelector('.mermaid').firstChild;
+        if (svg) {
+          console.log('init svg-pan-zoom');
+          svgPanZoom(svg, {
+						contain: true,
+						center: true,
+						controlIconsEnabled: true,
+					});
+        }
+      }, 1)
     }, 1);
   }
 
@@ -69,7 +80,8 @@ const Preview = (props) => {
     if (diagramIsDifferent && isNextValidationValid && !error) {
       setCurrentDefinition(definition);
       updatePreview();
-		}
+    }
+  // eslint-disable-next-line
   }, [definition]);
 
   return (
@@ -87,7 +99,7 @@ const Preview = (props) => {
         )}
 				{!updating && (
           <ErrorBoundary FallbackComponent={() => null}>
-            <Mermaid chart={currentDefinition} />
+            <Mermaid chart={currentDefinition} config={mermaidConfig} />
           </ErrorBoundary>
 				)}
 			</Flex>

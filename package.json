@@ -22,7 +22,8 @@
     "react-error-boundary": "^1.2.5",
     "react-icons": "^3.9.0",
     "react-mermaid2": "^0.1.4",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "svg-pan-zoom": "^3.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

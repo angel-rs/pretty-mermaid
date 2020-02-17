@@ -8,6 +8,22 @@
     min-height: inherit;
     position: relative;
 
+    .mermaid {
+      height: inherit;
+      min-height: inherit;
+      width: 100%;
+      padding: 6px;
+
+      svg {
+        min-height: inherit;
+        width: inherit;
+
+        &:hover {
+          cursor: grab;
+        }
+      }
+    }
+
     #diagram-alert {
       position: absolute;
       top: 0;
