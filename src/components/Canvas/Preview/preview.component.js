@@ -44,7 +44,7 @@ const Preview = (props) => {
 						contain: true,
 						center: true,
 						controlIconsEnabled: true,
-					});
+          });
         }
       }, 1)
     }, 1);

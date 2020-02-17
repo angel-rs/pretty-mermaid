@@ -21,6 +21,30 @@
         &:hover {
           cursor: grab;
         }
+
+        #svg-pan-zoom-controls {
+          transform: translate(90%, 16px) scale(0.75) !important;
+          background-color: transparent;
+
+
+          #svg-pan-zoom-zoom-in {
+            transform: translate(70px, 0px) scale(0.015) !important;
+          }
+          #svg-pan-zoom-reset-pan-zoom {
+            transform: translate(-15px, -3px) scale(0.4) !important;
+          }
+          #svg-pan-zoom-zoom-out {
+            transform: translate(-50px, 0px) scale(0.015) !important;
+          }
+
+          .svg-pan-zoom-control-background {
+            background-color: inherit;
+          }
+
+          * {
+            background-color: inherit;
+          }
+        }
       }
     }
 
@@ -29,6 +53,50 @@
       top: 0;
       left: 0;
       width: 100%;
+    }
+  }
+}
+
+.light-mode {
+  #svg-pan-zoom-controls {
+    #svg-pan-zoom-zoom-in {
+      path {
+        fill: gray;
+      }
+    }
+    #svg-pan-zoom-reset-pan-zoom {
+      path {
+        fill: gray;
+      }
+    }
+    #svg-pan-zoom-zoom-out {
+      path {
+        fill: gray;
+      }
+    }
+  }
+}
+
+.dark-mode {
+  #svg-pan-zoom-controls {
+    .svg-pan-zoom-control {
+      fill-opacity: 0.8;
+    }
+
+    #svg-pan-zoom-zoom-in {
+      path {
+        fill: green;
+      }
+    }
+    #svg-pan-zoom-reset-pan-zoom {
+      path {
+        fill: green;
+      }
+    }
+    #svg-pan-zoom-zoom-out {
+      path {
+        fill: green;
+      }
     }
   }
 }
