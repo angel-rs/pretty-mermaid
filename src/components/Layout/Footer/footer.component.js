@@ -29,7 +29,7 @@ const Footer = (props) => {
 			justify="center"
 			className="pretty-footer"
 		>
-      <Text style={{display: 'flex', flexDirection: 'row', lineHeight: '1.5em', letterSpacing: '2px' }}>
+      <Text className="footer-text">
         Built with&nbsp;{icons['react']},&nbsp;{icons['coffee']}&nbsp;&{icons['love']}, code in&nbsp;{icons['github']}, still a WIP!&nbsp;{icons['warning']}
       </Text>
 		</Flex>

@@ -23,6 +23,7 @@ const Preview = (props) => {
     onError,
     onErrorFixed,
     onUpdate,
+    ...rest
   } = props;
 
   const [currentDefinition, setCurrentDefinition] = useState('');
@@ -72,7 +73,7 @@ const Preview = (props) => {
   }, [definition]);
 
   return (
-		<Flex className="preview" direction="column">
+		<Flex className="preview" direction="column" {...rest}>
 			<Text fontSize={['sm', 'md', 'lg', 'xl']} style={{ paddingBottom: 16 }}>
 				Preview
 			</Text>

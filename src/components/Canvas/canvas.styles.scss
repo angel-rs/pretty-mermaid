@@ -1,6 +1,8 @@
 .canvas {
   padding: 6px;
   position: relative;
-  height: -webkit-fill-available;
+  padding: 0 10px;
+  height: fit-content;
+  min-height: 80vh;
 }
 

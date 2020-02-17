@@ -1,8 +1,11 @@
 .preview {
   width: 48vw;
-
+  height: inherit;
+  min-height: inherit;
+  
   .diagram-container {
-    height: 100%;
+    height: inherit;
+    min-height: inherit;
     position: relative;
 
     #diagram-alert {
