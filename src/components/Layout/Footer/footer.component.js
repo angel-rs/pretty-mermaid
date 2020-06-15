@@ -16,7 +16,7 @@ const Footer = (props) => {
 		coffee: <FaCoffee color="#795548" size="1.5em" />,
 		love: <TiHeart color="#dd2c00" size="1.5em" />,
 		github: (
-			<Link isExternal href="https://github.com/angel-rs/pretty-mermaid">
+			<Link isExternal href="https://github.com/angel-rs/share-code">
 				<FaGithub size="1.5em" />
 			</Link>
     ),
@@ -30,7 +30,7 @@ const Footer = (props) => {
 			className="pretty-footer"
 		>
       <Text className="footer-text">
-        Built with&nbsp;{icons['react']},&nbsp;{icons['coffee']}&nbsp;&{icons['love']}, code in&nbsp;{icons['github']}, still a WIP!&nbsp;{icons['warning']}
+        Built with&nbsp;{icons['react']},&nbsp;{icons['coffee']}&nbsp;&{icons['love']}, code in&nbsp;{icons['github']}
       </Text>
 		</Flex>
 	);

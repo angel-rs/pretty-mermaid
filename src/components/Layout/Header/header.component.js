@@ -28,32 +28,12 @@ const Header = (props) => {
 			>
 				<Flex direction="row">
           <Text fontSize={["sm", "md", "lg", "xl", '2xl', '3xl']} style={{ marginRight: 16 }}>
-						<span role="img" aria-label="mermaid">
-							🧜️
+						<span role="img" aria-label="code">
+							👩🏻‍💻
 						</span>
-						Pretty Mermaid
+            {' '}
+						Share code
 					</Text>
-          { width >= breakPoint && (
-            <Flex direction="column">
-              <Flex direction="row">
-                <Text fontSize="sm">
-                  pretty-mermaid&nbsp;
-              </Text>
-                <Badge variant="subtle" variantColor="green">
-                  {Config.versions.prettyMermaid}
-                </Badge>
-              </Flex>
-
-              <Flex direction="row">
-                <Text fontSize="sm">
-                  mermaid&nbsp;
-              </Text>
-                <Badge variant="subtle" variantColor="green">
-                  {Config.versions.mermaid}
-                </Badge>
-              </Flex>
-            </Flex>
-          )}
 				</Flex>
 
         <ActionButtons isMobile={width < breakPoint} />
